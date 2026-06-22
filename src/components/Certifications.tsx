@@ -14,18 +14,18 @@ interface Certificate {
 
 const certificatesData: Certificate[] = [
   {
-    title: "RFID HZ-100 and Zigbee Testing Certification",
-    organization: "Efftronics Systems Pvt Ltd",
-    year: "June 2025",
-    fileUrl: "/certificates/efftronics.pdf",
-    description: "Industrial certification validating successful execution of performance testing, read range calibration, and network latency diagnostics for RFID and Zigbee protocols.",
+    title: "Artificial Intelligence and Machine Learning (Industrial Automation) - L1",
+    organization: "Taras Systems and Solutions",
+    year: "April 2025",
+    fileUrl: "/certificates/taras_aiml.png",
+    description: "Completed intensive certification training on Artificial Intelligence and Machine Learning using Python, focusing on regression, classification models, and localized edge deployment.",
   },
   {
-    title: "Embedded Systems and AI/ML Training",
-    organization: "Microchip Technologies – Taras Solutions",
-    year: "April 2025",
-    fileUrl: "/certificates/microchip.pdf",
-    description: "Core specialization training covering microcontroller peripheral interfacing, real-time logging, and deployment of machine learning algorithms on edge nodes.",
+    title: "IIoT Programming & Automation - L2",
+    organization: "Taras Systems and Solutions",
+    year: "October 2025",
+    fileUrl: "/certificates/taras_iiot.png",
+    description: "Completed advanced certification training on Industrial Internet of Things (IIoT) Programming, hardware interfacing, and real-time process automations.",
   },
   {
     title: "Cadence Spectre IC Simulation Certification",
@@ -33,6 +33,13 @@ const certificatesData: Certificate[] = [
     year: "2025",
     fileUrl: "/certificates/cadence.pdf",
     description: "Professional certification validating capabilities in analog, RF, and mixed-signal integrated circuit simulations and parameter optimizations.",
+  },
+  {
+    title: "RFID HZ-100 and Zigbee Testing Certification",
+    organization: "Efftronics Systems Pvt Ltd",
+    year: "June 2025",
+    fileUrl: "/certificates/efftronics.pdf",
+    description: "Industrial certification validating successful execution of performance testing, read range calibration, and network latency diagnostics for RFID and Zigbee protocols.",
   },
 ];
 
@@ -49,6 +56,8 @@ export default function Certifications() {
     setActivePreviewUrl(null);
     setActiveTitle("");
   };
+
+  const isPdf = activePreviewUrl?.toLowerCase().endsWith(".pdf");
 
   return (
     <section id="certifications" className="py-24 bg-white border-b border-card-border">
@@ -71,11 +80,11 @@ export default function Certifications() {
         </div>
 
         {/* Certificates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {certificatesData.map((cert, idx) => (
             <motion.div
               key={idx}
-              className="bg-white border border-card-border rounded-[20px] p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 flex flex-col justify-between h-full group"
+              className="bg-white border border-card-border rounded-[20px] p-6 sm:p-8 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 flex flex-col justify-between h-full group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -120,7 +129,7 @@ export default function Certifications() {
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={cert.fileUrl}
-                    download={`${cert.title.replace(/\s+/g, "_")}.pdf`}
+                    download={`${cert.title.replace(/\s+/g, "_")}${cert.fileUrl.substring(cert.fileUrl.lastIndexOf("."))}`}
                     className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-foreground/5 hover:bg-foreground/10 text-foreground text-xs font-bold transition-all duration-200 text-center"
                   >
                     <Download size={14} />
@@ -179,13 +188,21 @@ export default function Certifications() {
                 </button>
               </div>
 
-              {/* Modal PDF Frame */}
-              <div className="flex-grow bg-slate-100">
-                <iframe
-                  src={activePreviewUrl}
-                  className="w-full h-full border-0"
-                  title={activeTitle}
-                />
+              {/* Modal Content Frame */}
+              <div className="flex-grow bg-slate-100 flex items-center justify-center p-4 overflow-auto">
+                {isPdf ? (
+                  <iframe
+                    src={activePreviewUrl}
+                    className="w-full h-full border-0"
+                    title={activeTitle}
+                  />
+                ) : (
+                  <img
+                    src={activePreviewUrl}
+                    alt={activeTitle}
+                    className="max-w-full max-h-[70vh] object-contain shadow-md rounded-lg"
+                  />
+                )}
               </div>
             </motion.div>
           </div>
